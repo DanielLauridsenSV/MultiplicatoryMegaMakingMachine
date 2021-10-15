@@ -43,7 +43,7 @@ namespace MultiplicatoryMegaMakingMachine
             }
             return produceableprodukt;
         }
-        public List<Inventory_Item> ProduceGoods(List<ICraftable_Items> producableproduct)
+        public void ProduceGoods(List<ICraftable_Items> producableproduct)
         {
            
             Console.WriteLine("\nchose the product you want to create\n");
@@ -55,7 +55,6 @@ namespace MultiplicatoryMegaMakingMachine
                 {
                     ProvidedMaterials.Add((Inventory_Item)product);
                     ProvidedMaterials = product.RemoveUsedMaterials(ProvidedMaterials);
-                    return ProvidedMaterials;
                 }
                 else
                 { Console.WriteLine("you do not have enough material for that products, try again"); }
