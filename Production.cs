@@ -24,7 +24,7 @@ namespace MultiplicatoryMegaMakingMachine
             Availableproducts.Add(toaster);
             Availableproducts.Add(wheel); ;
         }
-        public List<ICraftable_Items> displayavailableproducts(Storage) 
+        public List<ICraftable_Items> Displayavailableproducts() 
         {
             List<ICraftable_Items> produceableprodukt = new();
             Console.Clear();
@@ -43,7 +43,7 @@ namespace MultiplicatoryMegaMakingMachine
             }
             return produceableprodukt;
         }
-        public void ProduceGoods(Storage storage,List<ICraftable_Items> producableproduct)
+        public List<Inventory_Item> ProduceGoods(List<ICraftable_Items> producableproduct)
         {
            
             Console.WriteLine("\nchose the product you want to create\n");
@@ -53,14 +53,14 @@ namespace MultiplicatoryMegaMakingMachine
                 ICraftable_Items product = Parsechoice();
                 if (producableproduct.Contains(product))
                 {
-                    storage.AddtoStorage(product as Inventory_Item);
+                    ProvidedMaterials.Add((Inventory_Item)product);
                     ProvidedMaterials = product.RemoveUsedMaterials(ProvidedMaterials);
-                    storage.AddtoStorage(ProvidedMaterials);
-                    break;
+                    return ProvidedMaterials;
                 }
                 else
                 { Console.WriteLine("you do not have enough material for that products, try again"); }
             }
+     
         }
         private ICraftable_Items Parsechoice()
         {

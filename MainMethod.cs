@@ -17,9 +17,10 @@ namespace MultiplicatoryMegaMakingMachine
                 List<Inventory_Item> chosenRawMaterials = new();
                 chosenRawMaterials.AddRange(storage.Userpicksmaterials());
                 production.Getmaterials(chosenRawMaterials);
-                production.displayavailableproducts();
-                ICraftable_Items product =production.ChoseItemToProduce();
-                production.ProduceGoods(storage,product);
+              List<ICraftable_Items> produceableproducts= production.Displayavailableproducts();
+               List<Inventory_Item> returnmaterials= production.ProduceGoods(produceableproducts);
+                storage.AddtoStorage(returnmaterials);
+             
             }
         }
     }

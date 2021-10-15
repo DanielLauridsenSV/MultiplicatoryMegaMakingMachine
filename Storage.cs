@@ -57,10 +57,10 @@ namespace MultiplicatoryMegaMakingMachine
             Console.WriteLine("\nchoose material\n");
             while (true)
             {
-                Inventory_Item choice = ParseMaterial();
-                if (MaterialInStorage.Contains(choice))
+                string choice = Console.ReadLine().ToLower();
+                if (MaterialInStorage.Find(X => X.Name == choice).Name == choice) 
                 {
-                    return MaterialInStorage.Find(x => x.GetType() == choice.GetType());
+                    return MaterialInStorage.Find(x => x.Name == choice);
                 }
                 Console.WriteLine("you have not chosen a valid material, try again");
             }
@@ -83,8 +83,6 @@ namespace MultiplicatoryMegaMakingMachine
             for (int i = 0; i < displaytofactory.Count; i++)
             { Console.WriteLine(displaytofactory[i].Name); }
         }
-        // I know these are bad and can induce unwanted sideeffects, but they are the best I can produce right now.
-        public void AddtoStorage(Inventory_Item product) => MaterialInStorage.Add(product);
         public void AddtoStorage(List<Inventory_Item> unusedmaterials) => MaterialInStorage.AddRange(unusedmaterials);
 
     }
