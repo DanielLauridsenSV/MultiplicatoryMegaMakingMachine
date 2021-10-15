@@ -8,12 +8,12 @@ namespace MultiplicatoryMegaMakingMachine
     {
         private List<Inventory_Item> ProvidedMaterials { get; set; }
         private List<ICraftable_Items> Availableproducts { get; set; }
-        List<ICraftable_Items> Produceableproducts = new();
+        private List<ICraftable_Items> Produceableproducts { get; set; }
         public Production()
         {
-
             ProvidedMaterials = new();
             Availableproducts = new();
+            Produceableproducts = new();
         }
 
         public void DeterminePossibleproducts()
