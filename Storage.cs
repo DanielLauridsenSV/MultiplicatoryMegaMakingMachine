@@ -15,11 +15,12 @@ namespace MultiplicatoryMegaMakingMachine
         }
         public void PopulateItemsinstorage()
         {
-            for (int i = 0; i <4 ; i++)
+            int minimumstock = 4;
+            for (int i = 0; i <minimumstock; i++)
             {
-                if (Materialinstorage.FindAll(X => X.GetType() == typeof(Steel)).Count <= 3)
+                if (Materialinstorage.FindAll(X => X.GetType() == typeof(Steel)).Count < minimumstock)
                 { Materialinstorage.Add(new Steel()); }
-                if (Materialinstorage.FindAll(X => X.GetType() == typeof(Rubber)).Count <= 3)
+                if (Materialinstorage.FindAll(X => X.GetType() == typeof(Rubber)).Count < minimumstock)
                 { Materialinstorage.Add(new Rubber()); }
             }
         }
