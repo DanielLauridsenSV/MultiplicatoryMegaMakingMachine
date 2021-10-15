@@ -8,8 +8,8 @@ namespace MultiplicatoryMegaMakingMachine
     {
         private List<Inventory_Item> ProvidedMaterials { get; set; }
         private List<ICraftable_Items> Availableproducts { get; set; }
-
-        public void PopulateAvailableMaterials()
+        List<ICraftable_Items> Produceableproducts = new();
+        public Production()
         {
             Car car = new();
             Toaster toaster = new();
@@ -17,17 +17,18 @@ namespace MultiplicatoryMegaMakingMachine
             Availableproducts = new();
             Availableproducts.Add(car);
             Availableproducts.Add(toaster);
-            Availableproducts.Add(wheel); ;
+            Availableproducts.Add(wheel);
         }
+
         public void Getmaterials(List<Inventory_Item> materialsfromstorage)
         {
             ProvidedMaterials = new();
             ProvidedMaterials = materialsfromstorage;
         }
 
-        public List<ICraftable_Items> Discernavailableproducts() 
+        public void Discernavailableproducts() 
         {
-            List<ICraftable_Items> produceableprodukt = new();
+            Produceableproducts.Clear();
             Console.Clear();
             Console.WriteLine("you can create the following items\n");
             
@@ -38,45 +39,44 @@ namespace MultiplicatoryMegaMakingMachine
                     ProvidedMaterials.FindAll(x => x.GetType() == typeof(Steel)).Count,
                     ProvidedMaterials.FindAll(x => x.GetType() == typeof(Wheel)).Count))
                 {
-                    produceableprodukt.Add(Availableproducts[i]);
+                    Produceableproducts.Add(Availableproducts[i]);
                 }
             }
-            return produceableprodukt;
         }
-        public void DisplayPossibleProducts(List<ICraftable_Items> possibleproducts)
+
+        public void DisplayPossibleProducts()
         {
-            possibleproducts = possibleproducts.OrderBy(X => X.Name).ToList();
-            for (int i = 0; i < possibleproducts.Count; i++)
+            Produceableproducts = Produceableproducts.OrderBy(X => X.Name).ToList();
+            for (int i = 0; i < Produceableproducts.Count; i++)
             {
-                Console.WriteLine($"* {possibleproducts[i].Name,-5}");
+                Console.WriteLine($"* {Produceableproducts[i].Name,-5}");
             }
         }
-        public void ProduceGoods(List<ICraftable_Items> producableproduct)
-        {
-           
+        public void ProduceGoods()
+        {     
             Console.WriteLine("\nchose the product you want to create\n");
 
             while (true)
             {
                 ICraftable_Items product = ParseICraftable_ITem();
-                if (producableproduct.Contains(product))
+                if (Produceableproducts.Contains(product))
                 {
                     ProvidedMaterials.Add((Inventory_Item)product);
                     ProvidedMaterials = product.RemoveUsedMaterials(ProvidedMaterials);
+                    break;
                 }
                 else
                 { Console.WriteLine("you do not have enough material for that products, try again"); }
             }
-     
         }
         private ICraftable_Items ParseICraftable_ITem()
         {
             while (true)
             {
                 string choice = Console.ReadLine().ToLower();
-                if (Availableproducts.Find(X => X.Name == choice).Name.ToLower() == choice)
+                if (Availableproducts.Find(X => X.Name.ToLower() == choice).Name.ToLower() == choice)
                 {
-                    return Availableproducts.Find(X => X.Name == choice); 
+                    return Availableproducts.Find(X => X.Name.ToLower() == choice); 
                 }
 
                 Console.WriteLine("you have not chosen a valid material, try again");

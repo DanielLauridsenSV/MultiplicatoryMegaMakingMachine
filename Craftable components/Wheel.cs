@@ -10,13 +10,18 @@ namespace MultiplicatoryMegaMakingMachine
         public Wheel() => Name = "Wheel";
         public bool CanProduce(int providedrubber, int providedsteel, int providedwheels)
         {
-            if (providedrubber >= Requiredrubber && providedsteel >= Requiredsteel && providedwheels >= Requiredwheels)
+            bool enoughRubber = providedrubber >= Requiredrubber;
+            bool enoughsteel = providedsteel >= Requiredsteel;
+            bool enoughwheels = providedwheels >= Requiredwheels;
+
+            if (enoughRubber && enoughsteel && enoughwheels)
             { return true; }
             else
             { return false; }
         }
         public List<Inventory_Item> RemoveUsedMaterials(List<Inventory_Item> providedmaterials)
         {
+
             for (int i = 0; i < Requiredrubber; i++)
             { providedmaterials.Remove(providedmaterials.Find(x => x.GetType() == typeof(Rubber))); }
 

@@ -11,9 +11,9 @@ namespace MultiplicatoryMegaMakingMachine
         public Storage()
         {
             MaterialInStorage = new();
-            MaterialToFactory = new();   
+            MaterialToFactory = new();
         }
-        private void PopulateItemsinstorage()
+        public void PopulateItemsinstorage()
         {
             Steel steel = new();
             Rubber rubber = new();
@@ -27,7 +27,7 @@ namespace MultiplicatoryMegaMakingMachine
             MaterialInStorage.Add(rubber);
         }
 
-        public List<Inventory_Item> Userpicksmaterials()
+        public List<Inventory_Item> UserPicksMaterials()
         {
             PopulateItemsinstorage();
             MaterialToFactory.Clear();
@@ -38,8 +38,8 @@ namespace MultiplicatoryMegaMakingMachine
                 Inventory_Item choice = ParseMaterial();
                 if (MaterialInStorage.Contains(choice))
                 {
-                    MaterialToFactory.Add(MaterialInStorage.Find(x => x.GetType() == choice.GetType()));
-                    MaterialInStorage.Remove(MaterialInStorage.Find(x => x.GetType() == choice.GetType()));
+                    MaterialToFactory.Add(MaterialInStorage.Find(X=>X ==choice));
+                    MaterialInStorage.Remove(MaterialInStorage.Find(X=>X ==choice));
                 }
                 else
                 {
@@ -48,7 +48,7 @@ namespace MultiplicatoryMegaMakingMachine
 
                 Console.WriteLine("\nif you want to proceed to the factory, write \"deliver\", else press enter");
                 if (Console.ReadLine().ToLower() == "deliver")
-                {break;}
+                { break; }
             }
             return MaterialToFactory;
         }
@@ -58,10 +58,11 @@ namespace MultiplicatoryMegaMakingMachine
             while (true)
             {
                 string choice = Console.ReadLine().ToLower();
-                if (MaterialInStorage.Find(X => X.Name == choice).Name == choice) 
+                if (MaterialInStorage.FindAll(X => X.Name.ToLower() == choice).Count >0)
                 {
-                    return MaterialInStorage.Find(x => x.Name == choice);
+                    return MaterialInStorage.Find(x => x.Name.ToLower() == choice);
                 }
+
                 Console.WriteLine("you have not chosen a valid material, try again");
             }
         }
@@ -69,8 +70,8 @@ namespace MultiplicatoryMegaMakingMachine
         {
             Console.Clear();
 
-            MaterialInStorage =MaterialInStorage.OrderBy(x => x.Name).ToList();
-            MaterialToFactory =MaterialToFactory.OrderBy(x => x.Name).ToList();
+            MaterialInStorage = MaterialInStorage.OrderBy(x => x.Name).ToList();
+            MaterialToFactory = MaterialToFactory.OrderBy(x => x.Name).ToList();
 
             Console.WriteLine("items in storage");
             for (int i = 0; i < MaterialInStorage.Count; i++)

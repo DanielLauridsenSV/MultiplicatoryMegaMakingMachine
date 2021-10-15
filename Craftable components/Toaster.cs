@@ -11,7 +11,11 @@ namespace MultiplicatoryMegaMakingMachine
         public Toaster() => Name = "Toaster";
         public bool CanProduce(int providedrubber, int providedsteel, int providedwheels)
         {
-            if (providedrubber >= Requiredrubber && providedsteel >= Requiredsteel && providedwheels >= Requiredwheels)
+            bool enoughRubber = providedrubber >= Requiredrubber;
+            bool enoughsteel = providedsteel >= Requiredsteel;
+            bool enoughwheels = providedwheels >= Requiredwheels;
+
+            if (enoughRubber && enoughsteel && enoughwheels)
             { return true; }
             else
             { return false; }

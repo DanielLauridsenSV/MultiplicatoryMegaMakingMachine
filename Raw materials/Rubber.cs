@@ -1,5 +1,4 @@
 ﻿
-
 namespace MultiplicatoryMegaMakingMachine
 {
     class Rubber : Inventory_Item, IRaw_materials
