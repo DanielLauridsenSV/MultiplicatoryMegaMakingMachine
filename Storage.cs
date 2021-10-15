@@ -7,7 +7,7 @@ namespace MultiplicatoryMegaMakingMachine
     public class Storage
     {
         private List<Inventory_Item> MaterialInStorage { get; set; }
-         List<Inventory_Item> MaterialToFactory { get; set; }
+        private List<Inventory_Item> MaterialToFactory { get; set; }
         public Storage()
         {
             MaterialInStorage = new();
@@ -17,14 +17,17 @@ namespace MultiplicatoryMegaMakingMachine
         {
             Steel steel = new();
             Rubber rubber = new();
-            for (int i = 0; i < 4; i++)
+
+            int amounttoincrease = 3;
+            int minimumamount = 4;
+            for (int i = 0; i < amounttoincrease; i++)
             {
-                if (MaterialInStorage.FindAll(X=>X ==steel).Count < 4)
-                { MaterialInStorage.Add(steel);}
-                if (MaterialInStorage.FindAll(X => X == rubber).Count < 4)
-                { MaterialInStorage.Add(rubber);}
+                if (MaterialInStorage.FindAll(X => X == steel).Count < minimumamount)
+                { MaterialInStorage.Add(steel); }
+                if (MaterialInStorage.FindAll(X => X == rubber).Count < minimumamount)
+                { MaterialInStorage.Add(rubber); }
             }
-      }
+        }
 
         public List<Inventory_Item> UserPicksMaterials()
         {
@@ -37,8 +40,8 @@ namespace MultiplicatoryMegaMakingMachine
                 Inventory_Item choice = ParseMaterial();
                 if (MaterialInStorage.Contains(choice))
                 {
-                    MaterialToFactory.Add(MaterialInStorage.Find(X=>X ==choice));
-                    MaterialInStorage.Remove(MaterialInStorage.Find(X=>X ==choice));
+                    MaterialToFactory.Add(MaterialInStorage.Find(X => X == choice));
+                    MaterialInStorage.Remove(MaterialInStorage.Find(X => X == choice));
                 }
                 else
                 {
@@ -57,7 +60,7 @@ namespace MultiplicatoryMegaMakingMachine
             while (true)
             {
                 string choice = Console.ReadLine().ToLower();
-                if (MaterialInStorage.FindAll(X => X.Name.ToLower() == choice).Count >0)
+                if (MaterialInStorage.FindAll(X => X.Name.ToLower() == choice).Count > 0)
                 {
                     return MaterialInStorage.Find(x => x.Name.ToLower() == choice);
                 }
@@ -67,7 +70,6 @@ namespace MultiplicatoryMegaMakingMachine
         private void Storageview()
         {
             Console.Clear();
-
             MaterialInStorage = MaterialInStorage.OrderBy(x => x.Name).ToList();
             MaterialToFactory = MaterialToFactory.OrderBy(x => x.Name).ToList();
 

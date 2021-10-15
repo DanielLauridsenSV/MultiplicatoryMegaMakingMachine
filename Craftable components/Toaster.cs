@@ -5,9 +5,9 @@ namespace MultiplicatoryMegaMakingMachine
 {
     class Toaster : Inventory_Item, ICraftable_Items
     {
-        public static int Requiredsteel { get; } = 2;
-        public static int Requiredrubber { get; } = 1;
-        public static int Requiredwheels { get; } = 0;
+        public  int Requiredsteel { get; } = 2;
+        public  int Requiredrubber { get; } = 1;
+        public  int Requiredwheels { get; } = 0;
         public Toaster() => Name = "Toaster";
         public bool CanProduce(int providedrubber, int providedsteel, int providedwheels)
         {

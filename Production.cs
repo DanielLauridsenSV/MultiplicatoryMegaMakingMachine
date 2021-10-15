@@ -14,11 +14,12 @@ namespace MultiplicatoryMegaMakingMachine
             Car car = new();
             Toaster toaster = new();
             Wheel wheel = new();
+            ProvidedMaterials = new();
             Availableproducts = new();
             Availableproducts.Add(car);
             Availableproducts.Add(toaster);
             Availableproducts.Add(wheel);
-            ProvidedMaterials = new();
+            
         }
 
         public void DeterminePossibleproducts()
@@ -53,7 +54,7 @@ namespace MultiplicatoryMegaMakingMachine
 
             while (true)
             {
-                ICraftable_Items product = ParseICraftable_ITem();
+                ICraftable_Items product = ParseICraftable_Item();
                 if (Produceableproducts.Contains(product))
                 {
                     ProvidedMaterials.Add((Inventory_Item)product);
@@ -64,7 +65,7 @@ namespace MultiplicatoryMegaMakingMachine
                 { Console.WriteLine("you do not have enough material for that products, try again"); }
             }
         }
-        private ICraftable_Items ParseICraftable_ITem()
+        private ICraftable_Items ParseICraftable_Item()
         {
             while (true)
             {
