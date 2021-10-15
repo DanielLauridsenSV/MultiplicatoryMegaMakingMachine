@@ -10,17 +10,18 @@ namespace MultiplicatoryMegaMakingMachine
         {
             Storage storage = new();
             Production production = new();
-            
+
             while (true)
             {
                 production.PopulateAvailableMaterials();
                 List<Inventory_Item> chosenRawMaterials = new();
                 chosenRawMaterials.AddRange(storage.Userpicksmaterials());
                 production.Getmaterials(chosenRawMaterials);
-              List<ICraftable_Items> produceableproducts= production.Displayavailableproducts();
-               List<Inventory_Item> returnmaterials= production.ProduceGoods(produceableproducts);
-                storage.AddtoStorage(returnmaterials);
-             
+                List<ICraftable_Items> produceableproducts = production.Displayavailableproducts();
+                production.ProduceGoods(produceableproducts);
+                List<Inventory_Item> unusedmaterialsandprodukt = production.ReturngoodstoStorage();
+                storage.AddtoStorage(unusedmaterialsandprodukt);
+
             }
         }
     }

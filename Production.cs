@@ -24,6 +24,8 @@ namespace MultiplicatoryMegaMakingMachine
             Availableproducts.Add(toaster);
             Availableproducts.Add(wheel); ;
         }
+
+        public List<Inventory_Item> ReturngoodstoStorage() => ProvidedMaterials;
         public List<ICraftable_Items> Displayavailableproducts() 
         {
             List<ICraftable_Items> produceableprodukt = new();
