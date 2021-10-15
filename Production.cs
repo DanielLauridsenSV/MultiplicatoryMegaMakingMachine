@@ -18,34 +18,29 @@ namespace MultiplicatoryMegaMakingMachine
             Availableproducts.Add(car);
             Availableproducts.Add(toaster);
             Availableproducts.Add(wheel);
-        }
-
-        public void Getmaterials(List<Inventory_Item> materialsfromstorage)
-        {
             ProvidedMaterials = new();
-            ProvidedMaterials = materialsfromstorage;
         }
 
-        public void Discernavailableproducts() 
+        public void DeterminePossibleproducts()
         {
             Produceableproducts.Clear();
-            Console.Clear();
-            Console.WriteLine("you can create the following items\n");
-            
+
             for (int i = 0; i < Availableproducts.Count; i++)
             {
                 if (Availableproducts[i].CanProduce(
                     ProvidedMaterials.FindAll(x => x.GetType() == typeof(Rubber)).Count,
                     ProvidedMaterials.FindAll(x => x.GetType() == typeof(Steel)).Count,
-                    ProvidedMaterials.FindAll(x => x.GetType() == typeof(Wheel)).Count))
+                    ProvidedMaterials.FindAll(x => x.GetType() == typeof(Wheel)).Count)
+                    )
                 {
                     Produceableproducts.Add(Availableproducts[i]);
                 }
             }
         }
-
         public void DisplayPossibleProducts()
         {
+            Console.Clear();
+            Console.WriteLine("you can create the following items\n");
             Produceableproducts = Produceableproducts.OrderBy(X => X.Name).ToList();
             for (int i = 0; i < Produceableproducts.Count; i++)
             {
@@ -53,7 +48,7 @@ namespace MultiplicatoryMegaMakingMachine
             }
         }
         public void ProduceGoods()
-        {     
+        {
             Console.WriteLine("\nchose the product you want to create\n");
 
             while (true)
@@ -76,12 +71,13 @@ namespace MultiplicatoryMegaMakingMachine
                 string choice = Console.ReadLine().ToLower();
                 if (Availableproducts.Find(X => X.Name.ToLower() == choice).Name.ToLower() == choice)
                 {
-                    return Availableproducts.Find(X => X.Name.ToLower() == choice); 
+                    return Availableproducts.Find(X => X.Name.ToLower() == choice);
                 }
-
                 Console.WriteLine("you have not chosen a valid material, try again");
             }
         }
+        public void SendMaterialsToFactory(List<Inventory_Item> materialsfromstorage)
+            => ProvidedMaterials = materialsfromstorage;
         public List<Inventory_Item> CollectUnusedMaterialAndProduct() => ProvidedMaterials;
     }
 }

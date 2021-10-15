@@ -6,8 +6,8 @@ namespace MultiplicatoryMegaMakingMachine
 {
     public class Storage
     {
-        static List<Inventory_Item> MaterialInStorage { get; set; }
-        static List<Inventory_Item> MaterialToFactory { get; set; }
+        private List<Inventory_Item> MaterialInStorage { get; set; }
+         List<Inventory_Item> MaterialToFactory { get; set; }
         public Storage()
         {
             MaterialInStorage = new();
@@ -17,15 +17,14 @@ namespace MultiplicatoryMegaMakingMachine
         {
             Steel steel = new();
             Rubber rubber = new();
-            MaterialInStorage.Add(steel);
-            MaterialInStorage.Add(steel);
-            MaterialInStorage.Add(steel);
-            MaterialInStorage.Add(steel);
-            MaterialInStorage.Add(rubber);
-            MaterialInStorage.Add(rubber);
-            MaterialInStorage.Add(rubber);
-            MaterialInStorage.Add(rubber);
-        }
+            for (int i = 0; i < 4; i++)
+            {
+                if (MaterialInStorage.FindAll(X=>X ==steel).Count < 4)
+                { MaterialInStorage.Add(steel);}
+                if (MaterialInStorage.FindAll(X => X == rubber).Count < 4)
+                { MaterialInStorage.Add(rubber);}
+            }
+      }
 
         public List<Inventory_Item> UserPicksMaterials()
         {
@@ -62,7 +61,6 @@ namespace MultiplicatoryMegaMakingMachine
                 {
                     return MaterialInStorage.Find(x => x.Name.ToLower() == choice);
                 }
-
                 Console.WriteLine("you have not chosen a valid material, try again");
             }
         }
@@ -82,7 +80,5 @@ namespace MultiplicatoryMegaMakingMachine
             { Console.WriteLine(MaterialToFactory[i].Name); }
         }
         public void AddtoStorage(List<Inventory_Item> unusedmaterials) => MaterialInStorage.AddRange(unusedmaterials);
-
     }
-
 }
