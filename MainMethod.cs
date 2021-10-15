@@ -18,7 +18,7 @@ namespace MultiplicatoryMegaMakingMachine
 
                 production.DeterminePossibleproducts();
                 production.DisplayPossibleProducts();
-                production.ProduceGoods();
+                production.Produce();
 
                 List<Inventory_Item> unusedmaterialsandprodukt = production.CollectUnusedMaterialAndProduct();
                 storage.AddtoStorage(unusedmaterialsandprodukt);

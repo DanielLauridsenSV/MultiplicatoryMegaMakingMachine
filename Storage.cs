@@ -6,11 +6,11 @@ namespace MultiplicatoryMegaMakingMachine
 {
     public class Storage
     {
-        private List<Inventory_Item> MaterialInStorage { get; set; }
+        private List<Inventory_Item> Materialinstorage { get; set; }
         private List<Inventory_Item> MaterialToFactory { get; set; }
         public Storage()
         {
-            MaterialInStorage = new();
+            Materialinstorage = new();
             MaterialToFactory = new();
         }
         public void PopulateItemsinstorage()
@@ -18,14 +18,15 @@ namespace MultiplicatoryMegaMakingMachine
             Steel steel = new();
             Rubber rubber = new();
 
-            int amounttoincrease = 3;
-            int minimumamount = 4;
+            int amounttoincrease = 4;
+            int minimumamount = 3;
             for (int i = 0; i < amounttoincrease; i++)
             {
-                if (MaterialInStorage.FindAll(X => X == steel).Count < minimumamount)
-                { MaterialInStorage.Add(steel); }
-                if (MaterialInStorage.FindAll(X => X == rubber).Count < minimumamount)
-                { MaterialInStorage.Add(rubber); }
+                if (Materialinstorage.FindAll(X => X.GetType() == typeof(Steel)).Count <= minimumamount)
+                { Materialinstorage.Add(steel); }
+                int rubbernumber = Materialinstorage.FindAll(X => X == steel).Count;
+                if (Materialinstorage.FindAll(X => X.GetType() == typeof(Rubber)).Count <= minimumamount)
+                { Materialinstorage.Add(rubber); }
             }
         }
 
@@ -38,10 +39,10 @@ namespace MultiplicatoryMegaMakingMachine
             {
                 Storageview();
                 Inventory_Item choice = ParseMaterial();
-                if (MaterialInStorage.Contains(choice))
+                if (Materialinstorage.Contains(choice))
                 {
-                    MaterialToFactory.Add(MaterialInStorage.Find(X => X == choice));
-                    MaterialInStorage.Remove(MaterialInStorage.Find(X => X == choice));
+                    MaterialToFactory.Add(Materialinstorage.Find(X => X == choice));
+                    Materialinstorage.Remove(Materialinstorage.Find(X => X == choice));
                 }
                 else
                 {
@@ -60,9 +61,9 @@ namespace MultiplicatoryMegaMakingMachine
             while (true)
             {
                 string choice = Console.ReadLine().ToLower();
-                if (MaterialInStorage.FindAll(X => X.Name.ToLower() == choice).Count > 0)
+                if (Materialinstorage.Find(X => X.Name.ToLower() == choice) !=null)
                 {
-                    return MaterialInStorage.Find(x => x.Name.ToLower() == choice);
+                    return Materialinstorage.Find(x => x.Name.ToLower() == choice);
                 }
                 Console.WriteLine("you have not chosen a valid material, try again");
             }
@@ -70,17 +71,17 @@ namespace MultiplicatoryMegaMakingMachine
         private void Storageview()
         {
             Console.Clear();
-            MaterialInStorage = MaterialInStorage.OrderBy(x => x.Name).ToList();
+            Materialinstorage = Materialinstorage.OrderBy(x => x.Name).ToList();
             MaterialToFactory = MaterialToFactory.OrderBy(x => x.Name).ToList();
 
             Console.WriteLine("items in storage");
-            for (int i = 0; i < MaterialInStorage.Count; i++)
-            { Console.WriteLine(MaterialInStorage[i].Name); }
+            for (int i = 0; i < Materialinstorage.Count; i++)
+            { Console.WriteLine(Materialinstorage[i].Name); }
 
             Console.WriteLine("\nThese are the items headed for the factory");
             for (int i = 0; i < MaterialToFactory.Count; i++)
             { Console.WriteLine(MaterialToFactory[i].Name); }
         }
-        public void AddtoStorage(List<Inventory_Item> unusedmaterials) => MaterialInStorage.AddRange(unusedmaterials);
+        public void AddtoStorage(List<Inventory_Item> unusedmaterials) => Materialinstorage.AddRange(unusedmaterials);
     }
 }

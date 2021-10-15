@@ -42,7 +42,7 @@ namespace MultiplicatoryMegaMakingMachine
                 Console.WriteLine($"* {Produceableproducts[i].Name,-5}");
             }
         }
-        public void ProduceGoods()
+        public void Produce()
         {
             Console.WriteLine("\nchose the product you want to create\n");
 
