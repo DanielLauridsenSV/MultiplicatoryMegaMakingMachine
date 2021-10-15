@@ -11,15 +11,9 @@ namespace MultiplicatoryMegaMakingMachine
         List<ICraftable_Items> Produceableproducts = new();
         public Production()
         {
-            Car car = new();
-            Toaster toaster = new();
-            Wheel wheel = new();
+
             ProvidedMaterials = new();
             Availableproducts = new();
-            Availableproducts.Add(car);
-            Availableproducts.Add(toaster);
-            Availableproducts.Add(wheel);
-            
         }
 
         public void DeterminePossibleproducts()
@@ -70,15 +64,15 @@ namespace MultiplicatoryMegaMakingMachine
             while (true)
             {
                 string choice = Console.ReadLine().ToLower();
-                if (Availableproducts.Find(X => X.Name.ToLower() == choice).Name.ToLower() == choice)
+                if (Produceableproducts.Find(X => X.Name.ToLower() == choice).Name.ToLower() == choice)
                 {
-                    return Availableproducts.Find(X => X.Name.ToLower() == choice);
+                    return Produceableproducts.Find(X => X.Name.ToLower() == choice);
                 }
                 Console.WriteLine("you have not chosen a valid material, try again");
             }
         }
-        public void SendMaterialsToFactory(List<Inventory_Item> materialsfromstorage)
-            => ProvidedMaterials = materialsfromstorage;
+        public void SendBlueprintAndMaterialsToFactory(List<Inventory_Item> materialsfromstorage) => ProvidedMaterials = materialsfromstorage;
+        public void SendblueprintsToFactory(List<ICraftable_Items>blueprints)=> Availableproducts = blueprints;
         public List<Inventory_Item> CollectUnusedMaterialAndProduct() => ProvidedMaterials;
     }
 }

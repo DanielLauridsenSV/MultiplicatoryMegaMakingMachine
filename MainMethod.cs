@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using MultiplicatoryMegaMakingMachine;
+﻿using System.Collections.Generic;
 
 namespace MultiplicatoryMegaMakingMachine
 {
@@ -10,11 +8,13 @@ namespace MultiplicatoryMegaMakingMachine
         {
             Storage storage = new();
             Production production = new();
+            BlueprintProvider blueprintprovider = new();
+            production.SendblueprintsToFactory( blueprintprovider.ProvideBlueprints());
 
             while (true)
             {
                 List<Inventory_Item> chosenRawMaterials = storage.UserPicksMaterials();
-                production.SendMaterialsToFactory(chosenRawMaterials);
+                production.SendBlueprintAndMaterialsToFactory(chosenRawMaterials);
 
                 production.DeterminePossibleproducts();
                 production.DisplayPossibleProducts();
@@ -22,7 +22,6 @@ namespace MultiplicatoryMegaMakingMachine
 
                 List<Inventory_Item> unusedmaterialsandprodukt = production.CollectUnusedMaterialAndProduct();
                 storage.AddtoStorage(unusedmaterialsandprodukt);
-
             }
         }
     }
