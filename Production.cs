@@ -38,7 +38,6 @@ namespace MultiplicatoryMegaMakingMachine
                     ProvidedMaterials.FindAll(x => x.GetType() == typeof(Steel)).Count,
                     ProvidedMaterials.FindAll(x => x.GetType() == typeof(Wheel)).Count))
                 {
-                  
                     produceableprodukt.Add(Availableproducts[i]);
                 }
             }
@@ -46,6 +45,7 @@ namespace MultiplicatoryMegaMakingMachine
         }
         public void DisplayPossibleProducts(List<ICraftable_Items> possibleproducts)
         {
+            possibleproducts = possibleproducts.OrderBy(X => X.Name).ToList();
             for (int i = 0; i < possibleproducts.Count; i++)
             {
                 Console.WriteLine($"* {possibleproducts[i].Name,-5}");

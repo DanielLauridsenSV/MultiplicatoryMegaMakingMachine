@@ -72,7 +72,6 @@ namespace MultiplicatoryMegaMakingMachine
             MaterialInStorage =MaterialInStorage.OrderBy(x => x.Name).ToList();
             MaterialToFactory =MaterialToFactory.OrderBy(x => x.Name).ToList();
 
-
             Console.WriteLine("items in storage");
             for (int i = 0; i < MaterialInStorage.Count; i++)
             { Console.WriteLine(MaterialInStorage[i].Name); }
