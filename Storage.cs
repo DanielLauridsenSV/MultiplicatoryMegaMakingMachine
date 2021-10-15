@@ -29,7 +29,6 @@ namespace MultiplicatoryMegaMakingMachine
                 { Materialinstorage.Add(rubber); }
             }
         }
-
         public List<Inventory_Item> UserPicksMaterials()
         {
             PopulateItemsinstorage();
