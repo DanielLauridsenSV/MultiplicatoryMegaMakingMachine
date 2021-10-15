@@ -58,7 +58,7 @@ namespace MultiplicatoryMegaMakingMachine
 
             while (true)
             {
-                ICraftable_Items product = Parsechoice();
+                ICraftable_Items product = ParseICraftable_ITem();
                 if (producableproduct.Contains(product))
                 {
                     ProvidedMaterials.Add((Inventory_Item)product);
@@ -69,7 +69,7 @@ namespace MultiplicatoryMegaMakingMachine
             }
      
         }
-        private ICraftable_Items Parsechoice()
+        private ICraftable_Items ParseICraftable_ITem()
         {
             while (true)
             {
