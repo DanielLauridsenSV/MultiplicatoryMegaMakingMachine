@@ -15,18 +15,12 @@ namespace MultiplicatoryMegaMakingMachine
         }
         public void PopulateItemsinstorage()
         {
-            Steel steel = new();
-            Rubber rubber = new();
-
-            int amounttoincrease = 4;
-            int minimumamount = 3;
-            for (int i = 0; i < amounttoincrease; i++)
+            for (int i = 0; i <4 ; i++)
             {
-                if (Materialinstorage.FindAll(X => X.GetType() == typeof(Steel)).Count <= minimumamount)
-                { Materialinstorage.Add(steel); }
-                int rubbernumber = Materialinstorage.FindAll(X => X == steel).Count;
-                if (Materialinstorage.FindAll(X => X.GetType() == typeof(Rubber)).Count <= minimumamount)
-                { Materialinstorage.Add(rubber); }
+                if (Materialinstorage.FindAll(X => X.GetType() == typeof(Steel)).Count <= 3)
+                { Materialinstorage.Add(new Steel()); }
+                if (Materialinstorage.FindAll(X => X.GetType() == typeof(Rubber)).Count <= 3)
+                { Materialinstorage.Add(new Rubber()); }
             }
         }
         public List<Inventory_Item> UserPicksMaterials()
@@ -43,14 +37,13 @@ namespace MultiplicatoryMegaMakingMachine
                     MaterialToFactory.Add(Materialinstorage.Find(X => X == choice));
                     Materialinstorage.Remove(Materialinstorage.Find(X => X == choice));
                 }
+                else if (Console.ReadLine().ToLower() == "deliver")
+                { break; }
+                
                 else
                 {
                     Console.WriteLine(" The material you selected does not exist in the inventory");
-                }
-
-                Console.WriteLine("\nif you want to proceed to the factory, write \"deliver\", else press enter");
-                if (Console.ReadLine().ToLower() == "deliver")
-                { break; }
+                }             
             }
             return MaterialToFactory;
         }
@@ -80,6 +73,7 @@ namespace MultiplicatoryMegaMakingMachine
             Console.WriteLine("\nThese are the items headed for the factory");
             for (int i = 0; i < MaterialToFactory.Count; i++)
             { Console.WriteLine(MaterialToFactory[i].Name); }
+            Console.WriteLine("\nif you want to proceed to the factory, write \"deliver\", else press enter");
         }
         public void AddtoStorage(List<Inventory_Item> unusedmaterials) => Materialinstorage.AddRange(unusedmaterials);
     }

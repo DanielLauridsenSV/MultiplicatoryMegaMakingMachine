@@ -6,11 +6,7 @@ namespace MultiplicatoryMegaMakingMachine
     {
         public List<ICraftable_Items> ProvideBlueprints()
         {
-            Car car = new();
-            Toaster toaster = new();
-            Wheel wheel = new();
-
-            return new List<ICraftable_Items> { car, toaster, wheel };
+            return new List<ICraftable_Items> { new Car(), new Toaster(), new Wheel() };
         }
     }
 }
