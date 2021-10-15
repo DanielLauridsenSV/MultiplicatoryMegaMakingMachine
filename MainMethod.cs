@@ -14,12 +14,15 @@ namespace MultiplicatoryMegaMakingMachine
             while (true)
             {
                 production.PopulateAvailableMaterials();
+
                 List<Inventory_Item> chosenRawMaterials = new();
                 chosenRawMaterials.AddRange(storage.Userpicksmaterials());
                 production.Getmaterials(chosenRawMaterials);
-                List<ICraftable_Items> produceableproducts = production.Displayavailableproducts();
+
+                List<ICraftable_Items> produceableproducts = production.Discernavailableproducts();
+                production.DisplayPossibleProducts(produceableproducts);
                 production.ProduceGoods(produceableproducts);
-                List<Inventory_Item> unusedmaterialsandprodukt = production.ReturngoodstoStorage();
+                List<Inventory_Item> unusedmaterialsandprodukt = production.CollectUnusedMaterialAndProduct();
                 storage.AddtoStorage(unusedmaterialsandprodukt);
 
             }

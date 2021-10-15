@@ -9,11 +9,6 @@ namespace MultiplicatoryMegaMakingMachine
         private List<Inventory_Item> ProvidedMaterials { get; set; }
         private List<ICraftable_Items> Availableproducts { get; set; }
 
-        public void Getmaterials(List<Inventory_Item> materialsfromstorage)
-        {
-            ProvidedMaterials = new();
-            ProvidedMaterials = materialsfromstorage;
-        }
         public void PopulateAvailableMaterials()
         {
             Car car = new();
@@ -24,9 +19,13 @@ namespace MultiplicatoryMegaMakingMachine
             Availableproducts.Add(toaster);
             Availableproducts.Add(wheel); ;
         }
+        public void Getmaterials(List<Inventory_Item> materialsfromstorage)
+        {
+            ProvidedMaterials = new();
+            ProvidedMaterials = materialsfromstorage;
+        }
 
-        public List<Inventory_Item> ReturngoodstoStorage() => ProvidedMaterials;
-        public List<ICraftable_Items> Displayavailableproducts() 
+        public List<ICraftable_Items> Discernavailableproducts() 
         {
             List<ICraftable_Items> produceableprodukt = new();
             Console.Clear();
@@ -39,11 +38,18 @@ namespace MultiplicatoryMegaMakingMachine
                     ProvidedMaterials.FindAll(x => x.GetType() == typeof(Steel)).Count,
                     ProvidedMaterials.FindAll(x => x.GetType() == typeof(Wheel)).Count))
                 {
-                    Console.WriteLine($"* {Availableproducts[i].Name,-5}");
+                  
                     produceableprodukt.Add(Availableproducts[i]);
                 }
             }
             return produceableprodukt;
+        }
+        public void DisplayPossibleProducts(List<ICraftable_Items> possibleproducts)
+        {
+            for (int i = 0; i < possibleproducts.Count; i++)
+            {
+                Console.WriteLine($"* {possibleproducts[i].Name,-5}");
+            }
         }
         public void ProduceGoods(List<ICraftable_Items> producableproduct)
         {
@@ -76,6 +82,7 @@ namespace MultiplicatoryMegaMakingMachine
                 Console.WriteLine("you have not chosen a valid material, try again");
             }
         }
+        public List<Inventory_Item> CollectUnusedMaterialAndProduct() => ProvidedMaterials;
     }
 }
 
