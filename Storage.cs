@@ -68,20 +68,18 @@ namespace MultiplicatoryMegaMakingMachine
         private void Storageview()
         {
             Console.Clear();
-            List<Inventory_Item> displaystorage = new();
-            List<Inventory_Item> displaytofactory = new();
 
-            displaystorage.AddRange(MaterialInStorage.OrderBy(x => x.Name));
-            displaytofactory.AddRange(MaterialToFactory.OrderBy(x => x.Name));
+            MaterialInStorage =MaterialInStorage.OrderBy(x => x.Name).ToList();
+            MaterialToFactory =MaterialToFactory.OrderBy(x => x.Name).ToList();
 
 
             Console.WriteLine("items in storage");
-            for (int i = 0; i < displaystorage.Count; i++)
-            { Console.WriteLine(displaystorage[i].Name); }
+            for (int i = 0; i < MaterialInStorage.Count; i++)
+            { Console.WriteLine(MaterialInStorage[i].Name); }
 
             Console.WriteLine("\nThese are the items headed for the factory");
-            for (int i = 0; i < displaytofactory.Count; i++)
-            { Console.WriteLine(displaytofactory[i].Name); }
+            for (int i = 0; i < MaterialToFactory.Count; i++)
+            { Console.WriteLine(MaterialToFactory[i].Name); }
         }
         public void AddtoStorage(List<Inventory_Item> unusedmaterials) => MaterialInStorage.AddRange(unusedmaterials);
 
