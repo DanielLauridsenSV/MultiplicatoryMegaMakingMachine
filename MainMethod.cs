@@ -9,7 +9,7 @@ namespace MultiplicatoryMegaMakingMachine
             Storage storage = new();
             Production production = new();
             BlueprintProvider blueprintprovider = new();
-            production.SendblueprintsToFactory( blueprintprovider.ProvideBlueprints());
+            production.SendBlueprintsToFactory( blueprintprovider.ProvideBlueprints());
 
             while (true)
             {
