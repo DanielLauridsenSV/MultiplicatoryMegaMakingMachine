@@ -7,12 +7,12 @@ namespace MultiplicatoryMegaMakingMachine
     public class Production
     {
         private List<Inventory_Item> ProvidedMaterials { get; set; }
-        private List<ICraftable_Items> Availableproducts { get; set; }
+        private List<ICraftable_Items> blueprints { get; set; }
         private List<ICraftable_Items> Produceableproducts { get; set; }
         public Production()
         {
             ProvidedMaterials = new();
-            Availableproducts = new();
+            blueprints = new();
             Produceableproducts = new();
         }
 
@@ -20,15 +20,15 @@ namespace MultiplicatoryMegaMakingMachine
         {
             Produceableproducts.Clear();
 
-            for (int i = 0; i < Availableproducts.Count; i++)
+            for (int i = 0; i < blueprints.Count; i++)
             {
-                if (Availableproducts[i].CanProduce(
+                if (blueprints[i].CanProduce(
                     ProvidedMaterials.FindAll(x => x.GetType() == typeof(Rubber)).Count,
                     ProvidedMaterials.FindAll(x => x.GetType() == typeof(Steel)).Count,
                     ProvidedMaterials.FindAll(x => x.GetType() == typeof(Wheel)).Count)
                     )
                 {
-                    Produceableproducts.Add(Availableproducts[i]);
+                    Produceableproducts.Add(blueprints[i]);
                 }
             }
         }
@@ -72,7 +72,7 @@ namespace MultiplicatoryMegaMakingMachine
             }
         }
         public void SendBlueprintAndMaterialsToFactory(List<Inventory_Item> materialsfromstorage) => ProvidedMaterials = materialsfromstorage;
-        public void SendblueprintsToFactory(List<ICraftable_Items>blueprints)=> Availableproducts = blueprints;
+        public void SendblueprintsToFactory(List<ICraftable_Items>blueprints)=> this.blueprints = blueprints;
         public List<Inventory_Item> CollectUnusedMaterialAndProduct() => ProvidedMaterials;
     }
 }
