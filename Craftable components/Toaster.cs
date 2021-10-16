@@ -3,7 +3,7 @@
 
 namespace MultiplicatoryMegaMakingMachine
 {
-    class Toaster : Inventory_Item, ICraftable_Items
+    class Toaster : InventoryItem, ICraftable_Items
     {
         public  int Requiredsteel { get; } = 2;
         public  int Requiredrubber { get; } = 1;
@@ -21,7 +21,7 @@ namespace MultiplicatoryMegaMakingMachine
             { return false; }
         }
 
-        public List<Inventory_Item> RemoveUsedMaterials(List<Inventory_Item> providedmaterials)
+        public List<IItems> RemoveUsedMaterials(List<IItems> providedmaterials)
         {
             for (int i = 0; i < Requiredrubber; i++)
             { providedmaterials.Remove(providedmaterials.Find(x => x.GetType() == typeof(Rubber))); }

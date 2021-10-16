@@ -1,7 +1,7 @@
 ﻿
 namespace MultiplicatoryMegaMakingMachine
 {
-    abstract public class Inventory_Item
+    abstract public class InventoryItem
     {
      public string Name { get; set; }
     }

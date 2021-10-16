@@ -6,21 +6,21 @@ namespace MultiplicatoryMegaMakingMachine
 {
     public class Production
     {
-        private List<Inventory_Item> ProvidedMaterials { get; set; }
-        private List<ICraftable_Items> blueprints { get; set; }
-        private List<ICraftable_Items> Produceableproducts { get; set; }
+        private List<IItems> ProvidedMaterials { get; set; }
+        private List<ICraftable_Items> Blueprints { get; set; }
+        private List<ICraftable_Items> ProduceableProducts { get; set; }
         public Production()
         {
             ProvidedMaterials = new();
-            blueprints = new();
-            Produceableproducts = new();
+            Blueprints = new();
+            ProduceableProducts = new();
         }
 
         public void DeterminePossibleproducts()
         {
-            Produceableproducts.Clear();
+            ProduceableProducts.Clear();
 
-            foreach (var blueprint in blueprints)
+            foreach (var blueprint in Blueprints)
             {
                 if (blueprint.CanProduce(
                   ProvidedMaterials.FindAll(x => x.GetType() == typeof(Rubber)).Count,
@@ -28,7 +28,7 @@ namespace MultiplicatoryMegaMakingMachine
                   ProvidedMaterials.FindAll(x => x.GetType() == typeof(Wheel)).Count)
                   )
                 {
-                    Produceableproducts.Add(blueprint);
+                    ProduceableProducts.Add(blueprint);
                 }
             }
         }
@@ -36,10 +36,10 @@ namespace MultiplicatoryMegaMakingMachine
         {
             Console.Clear();
             Console.WriteLine("you can create the following items\n");
-            Produceableproducts = Produceableproducts.OrderBy(X => X.Name).ToList();
-            for (int i = 0; i < Produceableproducts.Count; i++)
+            ProduceableProducts = ProduceableProducts.OrderBy(X => X.Name).ToList();
+            for (int i = 0; i < ProduceableProducts.Count; i++)
             {
-                Console.WriteLine($"* {Produceableproducts[i].Name,-5}");
+                Console.WriteLine($"* {ProduceableProducts[i].Name,-5}");
             }
         }
         public void Produce()
@@ -49,9 +49,9 @@ namespace MultiplicatoryMegaMakingMachine
             while (true)
             {
                 ICraftable_Items product = ParseICraftable_Item();
-                if (Produceableproducts.Contains(product))
+                if (ProduceableProducts.Contains(product))
                 {
-                    ProvidedMaterials.Add((Inventory_Item)product);
+                    ProvidedMaterials.Add((IItems)product);
                     ProvidedMaterials = product.RemoveUsedMaterials(ProvidedMaterials);
                     break;
                 }
@@ -64,16 +64,16 @@ namespace MultiplicatoryMegaMakingMachine
             while (true)
             {
                 string choice = Console.ReadLine().ToLower();
-                if (Produceableproducts.Find(X => X.Name.ToLower() == choice).Name.ToLower() == choice)
+                if (ProduceableProducts.Find(X => X.Name.ToLower() == choice).Name.ToLower() == choice)
                 {
-                    return Produceableproducts.Find(X => X.Name.ToLower() == choice);
+                    return ProduceableProducts.Find(X => X.Name.ToLower() == choice);
                 }
                 Console.WriteLine("you have not chosen a valid material, try again");
             }
         }
-        public void SendBlueprintAndMaterialsToFactory(List<Inventory_Item> materialsfromstorage) => ProvidedMaterials = materialsfromstorage;
-        public void SendBlueprintsToFactory(List<ICraftable_Items>blueprintsList)=> blueprints = blueprintsList;
-        public List<Inventory_Item> CollectUnusedMaterialAndProduct() => ProvidedMaterials;
+        public void SendMaterialsToFactory(List<IItems> materialsfromstorage) => ProvidedMaterials = materialsfromstorage;
+        public void SendBlueprintsToFactory(List<ICraftable_Items>blueprintsList)=> Blueprints = blueprintsList;
+        public List<IItems> CollectUnusedMaterialAndProduct() => ProvidedMaterials;
     }
 }
 

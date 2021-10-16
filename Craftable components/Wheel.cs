@@ -2,7 +2,7 @@
 
 namespace MultiplicatoryMegaMakingMachine
 {
-    class Wheel : Inventory_Item, ICraftable_Items
+    class Wheel : InventoryItem, ICraftable_Items
     {
         public  int Requiredsteel { get; } = 3;
         public  int Requiredrubber { get; } = 2;
@@ -19,7 +19,7 @@ namespace MultiplicatoryMegaMakingMachine
             else
             { return false; }
         }
-        public List<Inventory_Item> RemoveUsedMaterials(List<Inventory_Item> providedmaterials)
+        public List<IItems> RemoveUsedMaterials(List<IItems> providedmaterials)
         {
 
             for (int i = 0; i < Requiredrubber; i++)

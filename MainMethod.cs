@@ -8,19 +8,20 @@ namespace MultiplicatoryMegaMakingMachine
         {
             Storage storage = new();
             Production production = new();
-            BlueprintProvider blueprintprovider = new();
-            production.SendBlueprintsToFactory( blueprintprovider.ProvideBlueprints());
+            BlueprintProvider blueprintProvider = new();
+            List<ICraftable_Items> blueprints = blueprintProvider.ProvideBlueprints();
+            production.SendBlueprintsToFactory(blueprints);
 
             while (true)
             {
-                List<Inventory_Item> chosenRawMaterials = storage.UserPicksMaterials();
-                production.SendBlueprintAndMaterialsToFactory(chosenRawMaterials);
+                List<IItems> chosenRawMaterials = storage.UserPicksMaterials();
+                production.SendMaterialsToFactory(chosenRawMaterials);
 
                 production.DeterminePossibleproducts();
                 production.DisplayPossibleProducts();
                 production.Produce();
 
-                List<Inventory_Item> unusedmaterialsandprodukt = production.CollectUnusedMaterialAndProduct();
+                List<IItems> unusedmaterialsandprodukt = production.CollectUnusedMaterialAndProduct();
                 storage.AddtoStorage(unusedmaterialsandprodukt);
             }
         }

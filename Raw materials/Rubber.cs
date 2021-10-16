@@ -1,7 +1,7 @@
 ﻿
 namespace MultiplicatoryMegaMakingMachine
 {
-    class Rubber : Inventory_Item, IRaw_materials
+    class Rubber : InventoryItem, IRaw_materials
     {
         public Rubber() => Name = "rubber";
     }

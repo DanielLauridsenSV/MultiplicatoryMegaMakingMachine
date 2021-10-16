@@ -1,6 +1,6 @@
 ﻿
 namespace MultiplicatoryMegaMakingMachine
 {
-    class Steel : Inventory_Item, IRaw_materials
+    class Steel : InventoryItem, IRaw_materials
     { public Steel() => Name = "Steel";}
 }

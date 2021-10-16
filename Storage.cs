@@ -6,57 +6,66 @@ namespace MultiplicatoryMegaMakingMachine
 {
     public class Storage
     {
-        private List<Inventory_Item> Materialinstorage { get; set; }
-        private List<Inventory_Item> MaterialToFactory { get; set; }
+        private List<IItems> Materialinstorage { get; set; }
+        private List<IItems> MaterialToFactory { get; set; }
+        private static readonly int _minStock = 4;
         public Storage()
         {
             Materialinstorage = new();
             MaterialToFactory = new();
         }
-        public void PopulateItemsinstorage()
+        
+        public void CheckStorage()
         {
-            int minimumstock = 4;
-            for (int i = 0; i <minimumstock; i++)
-            {
-                if (Materialinstorage.FindAll(X => X.GetType() == typeof(Steel)).Count < minimumstock)
-                { Materialinstorage.Add(new Steel()); }
-                if (Materialinstorage.FindAll(X => X.GetType() == typeof(Rubber)).Count < minimumstock)
-                { Materialinstorage.Add(new Rubber()); }
-            }
+   
+            PopulateStorage(typeof(Steel));
+            PopulateStorage(typeof(Rubber));
+
         }
-        public List<Inventory_Item> UserPicksMaterials()
+        private void PopulateStorage(Type t)
         {
-            PopulateItemsinstorage();
+            while (Materialinstorage.FindAll(x=>x.GetType()== t).Count<_minStock)
+            {
+                Materialinstorage.Add((IItems)Activator.CreateInstance(t));
+            }
+       
+        }
+
+        public List<IItems> UserPicksMaterials()
+        {
+            CheckStorage();
             MaterialToFactory.Clear();
 
             while (true)
             {
                 Storageview();
-                Inventory_Item choice = ParseMaterial();
+                IItems choice = ParseMaterial();
                 if (Materialinstorage.Contains(choice))
                 {
                     MaterialToFactory.Add(Materialinstorage.Find(X => X == choice));
                     Materialinstorage.Remove(Materialinstorage.Find(X => X == choice));
                 }
-                else if (Console.ReadLine().ToLower() == "deliver")
-                { break; }
-                
+                Console.WriteLine("if you want to deliver the inventory to the factory, write \"deliver\"");
+                if (Console.ReadLine().Equals("deliver",StringComparison.OrdinalIgnoreCase))
+                {
+                    return MaterialToFactory;
+                }
                 else
                 {
                     Console.WriteLine(" The material you selected does not exist in the inventory");
                 }             
             }
-            return MaterialToFactory;
+            
         }
-        private Inventory_Item ParseMaterial()
+        private IItems ParseMaterial()
         {
             Console.WriteLine("\nchoose material\n");
             while (true)
             {
-                string choice = Console.ReadLine().ToLower();
-                if (Materialinstorage.Find(X => X.Name.ToLower() == choice) !=null)
+                string choice = Console.ReadLine();
+                if (Materialinstorage.Any(X => X.Name.Equals(choice,StringComparison.OrdinalIgnoreCase)))
                 {
-                    return Materialinstorage.Find(x => x.Name.ToLower() == choice);
+                    return Materialinstorage.Find(x => x.Name.Equals(choice,StringComparison.OrdinalIgnoreCase));
                 }
                 Console.WriteLine("you have not chosen a valid material, try again");
             }
@@ -76,6 +85,6 @@ namespace MultiplicatoryMegaMakingMachine
             { Console.WriteLine(MaterialToFactory[i].Name); }
             Console.WriteLine("\nif you want to proceed to the factory, write \"deliver\", else press enter");
         }
-        public void AddtoStorage(List<Inventory_Item> unusedmaterials) => Materialinstorage.AddRange(unusedmaterials);
+        public void AddtoStorage(List<IItems> unusedmaterials) => Materialinstorage.AddRange(unusedmaterials);
     }
 }
