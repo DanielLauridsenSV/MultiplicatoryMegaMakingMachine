@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace MultiplicatoryMegaMakingMachine
 {
@@ -10,10 +11,20 @@ namespace MultiplicatoryMegaMakingMachine
             Production production = new();
             BlueprintProvider blueprintProvider = new();
             List<ICraftable_Items> blueprints = blueprintProvider.ProvideBlueprints();
+
+            Console.WriteLine(" do you want to create your own item? enter \"yes\" otherwise, press enter to enter the factory");
+            if (Console.ReadLine().Equals("yes",StringComparison.OrdinalIgnoreCase))
+            {
+                Workshop workshop = new();
+                SelfCreatedItem item = workshop.CreateItemblueprint();
+                blueprints.Add(item);
+
+            }
             production.SendBlueprintsToFactory(blueprints);
 
             while (true)
             {
+                
                 List<IItems> chosenRawMaterials = storage.UserPicksMaterials();
                 production.SendMaterialsToFactory(chosenRawMaterials);
 
