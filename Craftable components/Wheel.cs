@@ -8,25 +8,20 @@ namespace MultiplicatoryMegaMakingMachine
         {
             { "Rubber", 3 },
             { "Steel", 2 },
-            
         };
 
-
-
         public Wheel() => Name = "Wheel";
+
         public bool CanProduce(Dictionary<string, int> sortedinventory)
         {
-            bool produceable = true;
             foreach (var item in Requirements)
             {
-
                 if (sortedinventory.ContainsKey(item.Key) == false || sortedinventory[item.Key] < item.Value)
                 {
-                    produceable = false;
-                    break;
+                    return false;
                 }
             }
-            return produceable;
+            return true;
         }
 
         public List<IItems> RemoveUsedMaterials(List<IItems> providedmaterials)

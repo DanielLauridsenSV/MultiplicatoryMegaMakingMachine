@@ -1,6 +1,5 @@
 ﻿
 namespace MultiplicatoryMegaMakingMachine
 {
-   public interface IRaw_materials : IItems
-    {}
+   public interface IRaw_materials : IItems { }
 }

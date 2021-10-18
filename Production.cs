@@ -48,7 +48,6 @@ namespace MultiplicatoryMegaMakingMachine
             }
         }
 
-
         public void DisplayPossibleProducts()
         {
             Console.Clear();
