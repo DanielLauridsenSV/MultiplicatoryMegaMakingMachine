@@ -35,12 +35,12 @@ namespace MultiplicatoryMegaMakingMachine
             while (true)
             {
                 Storageview();
-
-               string Choice = Console.ReadLine();
-                if (Materialinstorage.Any(x=>x.Name == Choice))
+                Console.WriteLine("choose your item");
+                string Choice = Console.ReadLine();
+                if (Materialinstorage.Any(x => x.Name.Equals(Choice,StringComparison.OrdinalIgnoreCase)))
                 {
-                    MaterialToFactory.Add(Materialinstorage.Find(X => X.Name == Choice));
-                    Materialinstorage.Remove(Materialinstorage.Find(X => X.Name == Choice));
+                    MaterialToFactory.Add(Materialinstorage.Find(x => x.Name.Equals(Choice, StringComparison.OrdinalIgnoreCase)));
+                    Materialinstorage.Remove(Materialinstorage.Find(x => x.Name.Equals(Choice, StringComparison.OrdinalIgnoreCase)));
                 }
                 else
                 {
@@ -54,6 +54,7 @@ namespace MultiplicatoryMegaMakingMachine
                 }
             }
         }
+
         private void Storageview()
         {
             Console.Clear();

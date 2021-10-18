@@ -86,6 +86,7 @@ namespace MultiplicatoryMegaMakingMachine
         }
         public void SendMaterialsToFactory(List<IItems> materialsfromstorage) => ProvidedMaterials = materialsfromstorage;
         public void SendBlueprintsToFactory(List<ICraftable_Items> blueprintsList) => Blueprints = blueprintsList;
+        public void SendBlueprintsToFactory(ICraftable_Items blueprint) => Blueprints.Add(blueprint);
         public List<IItems> CollectUnusedMaterialAndProduct() => ProvidedMaterials;
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MultiplicatoryMegaMakingMachine
 {
-    class SelfCreatedItem : InventoryItem, ICraftable_Items
+   class SelfCreatedItem : InventoryItem, ICraftable_Items
     {
         public Dictionary<string, int> Requirements { get; set ; }
 
