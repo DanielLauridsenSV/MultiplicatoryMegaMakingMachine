@@ -74,15 +74,27 @@ namespace MultiplicatoryMegaMakingMachine
             Console.Clear();
             Materialinstorage = Materialinstorage.OrderBy(x => x.Name).ToList();
             MaterialToFactory = MaterialToFactory.OrderBy(x => x.Name).ToList();
+            List<Type> displayedstorage = new();
 
-            Console.WriteLine("items in storage");
-            for (int i = 0; i < Materialinstorage.Count; i++)
-            { Console.WriteLine(Materialinstorage[i].Name); }
-
-            Console.WriteLine("\nThese are the items headed for the factory");
-            for (int i = 0; i < MaterialToFactory.Count; i++)
-            { Console.WriteLine(MaterialToFactory[i].Name); }
-            Console.WriteLine("\nif you want to proceed to the factory, write \"deliver\", else press enter");
+            Console.WriteLine("items in storage\n");
+            foreach (var item in Materialinstorage)
+            {
+                if (displayedstorage.Contains(item.GetType()) ==false)
+                {
+                    Console.WriteLine($"{item.Name,-7}: {Materialinstorage.FindAll(x => x.Name == item.Name).Count}");
+                    displayedstorage.Add(item.GetType());
+                }
+            }
+            Console.WriteLine("items headed for the factory\n");
+            List<Type> displayedFactory = new();
+            foreach (var item in MaterialToFactory)
+            {
+                if (displayedFactory.Contains(item.GetType()) == false)
+                {
+                    Console.WriteLine($"{item.Name,-7}: {MaterialToFactory.FindAll(x => x.Name == item.Name).Count}");
+                    displayedFactory.Add(item.GetType());
+                }
+            }
         }
         public void AddtoStorage(List<IItems> unusedmaterials) => Materialinstorage.AddRange(unusedmaterials);
     }
