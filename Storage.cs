@@ -9,7 +9,6 @@ namespace MultiplicatoryMegaMakingMachine
         private List<IItems> Materialinstorage { get; set; }
         private List<IItems> MaterialToFactory { get; set; }
         private List<Type> RawMaterials { get; set; } = new() { typeof(Steel), typeof(Rubber) };
-        private static readonly int _minStock = 4;
         public Storage()
         {
             Materialinstorage = new();
@@ -18,9 +17,10 @@ namespace MultiplicatoryMegaMakingMachine
 
         public void populatestorage()
         {
+            int minStock = 4;
             foreach (var material in RawMaterials)
             {
-                while (Materialinstorage.FindAll(x => x.GetType() == material).Count < _minStock)
+                while (Materialinstorage.FindAll(x => x.GetType() == material).Count < minStock)
                 {
                     Materialinstorage.Add((IItems)Activator.CreateInstance(material));
                 }
@@ -35,41 +35,25 @@ namespace MultiplicatoryMegaMakingMachine
             while (true)
             {
                 Storageview();
-                IItems choice = ParseMaterial();
-                if (Materialinstorage.Contains(choice))
-                {
-                    MaterialToFactory.Add(Materialinstorage.Find(X => X == choice));
-                    Materialinstorage.Remove(Materialinstorage.Find(X => X == choice));
-                }
-                Console.WriteLine("if you want to deliver the inventory to the factory, write \"deliver\"");
 
+               string Choice = Console.ReadLine();
+                if (Materialinstorage.Any(x=>x.Name == Choice))
+                {
+                    MaterialToFactory.Add(Materialinstorage.Find(X => X.Name == Choice));
+                    Materialinstorage.Remove(Materialinstorage.Find(X => X.Name == Choice));
+                }
+                else
+                {
+                    Console.WriteLine("you have not entered a valid material");
+                }
+                
+                Console.WriteLine("if you want to deliver the inventory to the factory, write \"deliver\"");
                 if (Console.ReadLine().Equals("deliver", StringComparison.OrdinalIgnoreCase))
                 {
                     return MaterialToFactory;
                 }
-                else
-                {
-                    Console.WriteLine(" The material you selected does not exist in the inventory");
-                }
-            }
-
-        }
-
-        private IItems ParseMaterial()
-        {
-            Console.WriteLine("\nchoose material\n");
-            while (true)
-            {
-                string choice = Console.ReadLine();
-                if (Materialinstorage.Any(X => X.Name.Equals(choice, StringComparison.OrdinalIgnoreCase)))
-                {
-                    return Materialinstorage.Find(x => x.Name.Equals(choice, StringComparison.OrdinalIgnoreCase));
-                }
-
-                Console.WriteLine("you have not chosen a valid material, try again");
             }
         }
-
         private void Storageview()
         {
             Console.Clear();
@@ -87,8 +71,8 @@ namespace MultiplicatoryMegaMakingMachine
                     displayedstorage.Add(item.GetType());
                 }
             }
-            Console.WriteLine("items headed for the factory\n");
 
+            Console.WriteLine("items headed for the factory\n");
             foreach (var item in MaterialToFactory)
             {
                 if (displayedFactory.Contains(item.GetType()) == false)
@@ -98,7 +82,6 @@ namespace MultiplicatoryMegaMakingMachine
                 }
             }
         }
-
         public void AddtoStorage(List<IItems> unusedmaterials) => Materialinstorage.AddRange(unusedmaterials);
     }
 }

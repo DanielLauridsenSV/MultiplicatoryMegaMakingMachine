@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,7 +10,6 @@ namespace MultiplicatoryMegaMakingMachine
         private Dictionary<string, int> SortedMaterials { get; set; }
         private List<ICraftable_Items> ProduceableProducts { get; set; }
         private List<ICraftable_Items> Blueprints { get; set; }
-
 
         public Production()
         {
@@ -32,7 +30,6 @@ namespace MultiplicatoryMegaMakingMachine
                     ProvidedMaterials[i].Name,
                     ProvidedMaterials.FindAll(x => x.Name == ProvidedMaterials[i].Name).Count);
                 }
-
             }
         }
         public void DeterminePossibleProducts()
@@ -48,7 +45,6 @@ namespace MultiplicatoryMegaMakingMachine
             }
 
         }
-
         public void DisplayPossibleProducts()
         {
             Console.Clear();
