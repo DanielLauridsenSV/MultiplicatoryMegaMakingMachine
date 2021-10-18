@@ -8,9 +8,11 @@ namespace MultiplicatoryMegaMakingMachine
     public class Production
     {
         private List<IItems> ProvidedMaterials { get; set; }
-        private List<ICraftable_Items> Blueprints { get; set; }
-        private List<ICraftable_Items> ProduceableProducts { get; set; }
         private Dictionary<string, int> SortedMaterials { get; set; }
+        private List<ICraftable_Items> ProduceableProducts { get; set; }
+        private List<ICraftable_Items> Blueprints { get; set; }
+
+
         public Production()
         {
             ProvidedMaterials = new();
@@ -25,34 +27,34 @@ namespace MultiplicatoryMegaMakingMachine
             for (int i = 0; i < ProvidedMaterials.Count; i++)
             {
                 if (SortedMaterials.ContainsKey(ProvidedMaterials[i].Name) == false)
-                {  
+                {
                     SortedMaterials.Add(
                     ProvidedMaterials[i].Name,
-                    ProvidedMaterials.FindAll(x => x.Name == ProvidedMaterials[i].Name).Count); 
-                } 
-           
+                    ProvidedMaterials.FindAll(x => x.Name == ProvidedMaterials[i].Name).Count);
+                }
+
             }
         }
         public void DeterminePossibleProducts()
         {
+            ProduceableProducts.Clear();
+            Sortinventory();
+            foreach (var blueprint in Blueprints)
             {
-                ProduceableProducts.Clear();
-                Sortinventory();
-                foreach (var blueprint in Blueprints)
+                if (blueprint.CanProduce(SortedMaterials))
                 {
-                    if (blueprint.CanProduce(SortedMaterials))
-                    {
-                        ProduceableProducts.Add(blueprint);
-                    }
+                    ProduceableProducts.Add(blueprint);
                 }
             }
+
         }
 
         public void DisplayPossibleProducts()
         {
             Console.Clear();
-            Console.WriteLine("you can create the following items\n");
             ProduceableProducts = ProduceableProducts.OrderBy(X => X.Name).ToList();
+
+            Console.WriteLine("you can create the following items\n");
             for (int i = 0; i < ProduceableProducts.Count; i++)
             {
                 Console.WriteLine($"* {ProduceableProducts[i].Name,-5}");
@@ -67,7 +69,7 @@ namespace MultiplicatoryMegaMakingMachine
                 ICraftable_Items product = ParseICraftable_Item();
                 if (ProduceableProducts.Contains(product))
                 {
-                    ProvidedMaterials.Add((IItems)product);
+                    ProvidedMaterials.Add(product);
                     ProvidedMaterials = product.RemoveUsedMaterials(ProvidedMaterials);
                     break;
                 }
@@ -79,8 +81,8 @@ namespace MultiplicatoryMegaMakingMachine
         {
             while (true)
             {
-                string choice = Console.ReadLine().ToLower();
-                if (ProduceableProducts.Find(X => X.Name.ToLower() == choice).Name.ToLower() == choice)
+                string choice = Console.ReadLine();
+                if (ProduceableProducts.Any(X => X.Name.Equals(choice,StringComparison.OrdinalIgnoreCase)))
                 {
                     return ProduceableProducts.Find(X => X.Name.ToLower() == choice);
                 }

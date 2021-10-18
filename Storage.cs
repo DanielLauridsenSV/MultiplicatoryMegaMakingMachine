@@ -16,24 +16,20 @@ namespace MultiplicatoryMegaMakingMachine
             MaterialToFactory = new();
         }
 
-        public void CheckStorage()
+        public void populatestorage()
         {
-            foreach (var item in RawMaterials)
+            foreach (var material in RawMaterials)
             {
-                PopulateStorage(item);
-            }
-        }
-        private void PopulateStorage(Type t)
-        {
-            while (Materialinstorage.FindAll(x => x.GetType() == t).Count < _minStock)
-            {
-                Materialinstorage.Add((IItems)Activator.CreateInstance(t));
+                while (Materialinstorage.FindAll(x => x.GetType() == material).Count < _minStock)
+                {
+                    Materialinstorage.Add((IItems)Activator.CreateInstance(material));
+                }
             }
         }
 
         public List<IItems> UserPicksMaterials()
         {
-            CheckStorage();
+            populatestorage();
             MaterialToFactory.Clear();
 
             while (true)
@@ -46,6 +42,7 @@ namespace MultiplicatoryMegaMakingMachine
                     Materialinstorage.Remove(Materialinstorage.Find(X => X == choice));
                 }
                 Console.WriteLine("if you want to deliver the inventory to the factory, write \"deliver\"");
+
                 if (Console.ReadLine().Equals("deliver", StringComparison.OrdinalIgnoreCase))
                 {
                     return MaterialToFactory;
@@ -57,6 +54,7 @@ namespace MultiplicatoryMegaMakingMachine
             }
 
         }
+
         private IItems ParseMaterial()
         {
             Console.WriteLine("\nchoose material\n");
@@ -71,6 +69,7 @@ namespace MultiplicatoryMegaMakingMachine
                 Console.WriteLine("you have not chosen a valid material, try again");
             }
         }
+
         private void Storageview()
         {
             Console.Clear();
@@ -99,6 +98,7 @@ namespace MultiplicatoryMegaMakingMachine
                 }
             }
         }
+
         public void AddtoStorage(List<IItems> unusedmaterials) => Materialinstorage.AddRange(unusedmaterials);
     }
 }
