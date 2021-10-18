@@ -43,7 +43,6 @@ namespace MultiplicatoryMegaMakingMachine
                     ProduceableProducts.Add(blueprint);
                 }
             }
-
         }
         public void DisplayPossibleProducts()
         {
