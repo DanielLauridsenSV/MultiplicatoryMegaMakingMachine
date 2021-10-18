@@ -5,28 +5,42 @@ namespace MultiplicatoryMegaMakingMachine
 {
     class Car : InventoryItem, ICraftable_Items
     {
-        public static int Requiredsteel { get; } = 3;
-        public static int Requiredrubber { get; } = 2;
-        public static int Requiredwheels { get; } = 4;
+        public Dictionary<string, int> Requirements { get; set; } = new Dictionary<string, int>
+        {
+            { "Rubber", 3 },
+            { "Steel", 2 },
+            { "wheel", 4 }
+        };
         public Car() => Name = "Car";
 
-        public bool CanProduce(int providedrubber, int providedsteel, int providedwheels)
+
+        public bool CanProduce(Dictionary<string, int> sortedinventory)
         {
-          return  providedsteel >= Requiredsteel && providedrubber >= Requiredrubber && providedwheels >= Requiredwheels;
+            bool produceable = true;
+            foreach (var item in Requirements)
+            {
+                
+                if (sortedinventory.ContainsKey(item.Key) == false ||sortedinventory[item.Key]  < item.Value)
+                {
+                    produceable=  false;
+                    break;
+                }
+            }
+            return produceable;
         }
-         
+
         public List<IItems> RemoveUsedMaterials(List<IItems> providedmaterials)
         {
-            for (int i = 0; i < Requiredrubber; i++)
-            { providedmaterials.Remove(providedmaterials.Find(x => x.GetType() == typeof(Rubber))); }
-
-            for (int i = 0; i < Requiredsteel; i++)
-            { providedmaterials.Remove(providedmaterials.Find(x => x.GetType() == typeof(Steel))); }
-
-            for (int i = 0; i < Requiredwheels; i++)
-            {providedmaterials.Remove(providedmaterials.Find(x => x.GetType() == typeof(Wheel))); }
-
+            foreach (var item in Requirements)
+            {
+                for (int i = 0; i < item.Value; i++)
+                {
+                    providedmaterials.Remove(providedmaterials.Find(x => x.Name == item.Key));
+                }
+            }
             return providedmaterials;
         }
+
+
     }
 }

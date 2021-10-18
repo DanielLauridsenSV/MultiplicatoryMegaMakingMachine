@@ -17,7 +17,7 @@ namespace MultiplicatoryMegaMakingMachine
                 List<IItems> chosenRawMaterials = storage.UserPicksMaterials();
                 production.SendMaterialsToFactory(chosenRawMaterials);
 
-                production.DeterminePossibleproducts();
+                production.DeterminePossibleProducts();
                 production.DisplayPossibleProducts();
                 production.Produce();
 

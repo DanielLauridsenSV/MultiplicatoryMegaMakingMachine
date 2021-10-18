@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,29 +10,45 @@ namespace MultiplicatoryMegaMakingMachine
         private List<IItems> ProvidedMaterials { get; set; }
         private List<ICraftable_Items> Blueprints { get; set; }
         private List<ICraftable_Items> ProduceableProducts { get; set; }
+        private Dictionary<string, int> SortedMaterials { get; set; }
         public Production()
         {
             ProvidedMaterials = new();
             Blueprints = new();
             ProduceableProducts = new();
+            SortedMaterials = new();
         }
 
-        public void DeterminePossibleproducts()
+        private void Sortinventory()
         {
-            ProduceableProducts.Clear();
-
-            foreach (var blueprint in Blueprints)
+            SortedMaterials.Clear();
+            for (int i = 0; i < ProvidedMaterials.Count; i++)
             {
-                if (blueprint.CanProduce(
-                  ProvidedMaterials.FindAll(x => x.GetType() == typeof(Rubber)).Count,
-                  ProvidedMaterials.FindAll(x => x.GetType() == typeof(Steel)).Count,
-                  ProvidedMaterials.FindAll(x => x.GetType() == typeof(Wheel)).Count)
-                  )
+                if (SortedMaterials.ContainsKey(ProvidedMaterials[i].Name) == false)
+                {  
+                    SortedMaterials.Add(
+                    ProvidedMaterials[i].Name,
+                    ProvidedMaterials.FindAll(x => x.Name == ProvidedMaterials[i].Name).Count); 
+                } 
+           
+            }
+        }
+        public void DeterminePossibleProducts()
+        {
+            {
+                ProduceableProducts.Clear();
+                Sortinventory();
+                foreach (var blueprint in Blueprints)
                 {
-                    ProduceableProducts.Add(blueprint);
+                    if (blueprint.CanProduce(SortedMaterials))
+                    {
+                        ProduceableProducts.Add(blueprint);
+                    }
                 }
             }
         }
+
+
         public void DisplayPossibleProducts()
         {
             Console.Clear();
@@ -72,7 +89,7 @@ namespace MultiplicatoryMegaMakingMachine
             }
         }
         public void SendMaterialsToFactory(List<IItems> materialsfromstorage) => ProvidedMaterials = materialsfromstorage;
-        public void SendBlueprintsToFactory(List<ICraftable_Items>blueprintsList)=> Blueprints = blueprintsList;
+        public void SendBlueprintsToFactory(List<ICraftable_Items> blueprintsList) => Blueprints = blueprintsList;
         public List<IItems> CollectUnusedMaterialAndProduct() => ProvidedMaterials;
     }
 }

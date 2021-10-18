@@ -28,7 +28,6 @@ namespace MultiplicatoryMegaMakingMachine
             {
                 Materialinstorage.Add((IItems)Activator.CreateInstance(t));
             }
-       
         }
 
         public List<IItems> UserPicksMaterials()
