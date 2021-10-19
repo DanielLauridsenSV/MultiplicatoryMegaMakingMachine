@@ -41,6 +41,7 @@ namespace MultiplicatoryMegaMakingMachine
                 {
                     MaterialToFactory.Add(Materialinstorage.Find(x => x.Name.Equals(Choice, StringComparison.OrdinalIgnoreCase)));
                     Materialinstorage.Remove(Materialinstorage.Find(x => x.Name.Equals(Choice, StringComparison.OrdinalIgnoreCase)));
+                   
                 }
                 else
                 {
